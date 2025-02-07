@@ -1,0 +1,29 @@
+name: Generar QR Code
+
+on:
+  push:
+    branches:
+      - main  # Se ejecutará cada vez que hagas un push en la rama "main"
+
+jobs:
+  generate_qr:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout del repositorio
+        uses: actions/checkout@v3
+
+      - name: Instalar dependencias
+        run: pip install qrcode[pil]
+
+      - name: Generar código QR
+        run: |
+          python -c "
+          import qrcode;
+          img = qrcode.make('https://jlmelo98.github.io/Algo-rico-pal-hambre-/');
+          img.save('qr_code.png')"
+
+      - name: Subir QR como artefacto
+        uses: actions/upload-artifact@v3
+        with:
+          name: qr_code
+          path: qr_code.png
