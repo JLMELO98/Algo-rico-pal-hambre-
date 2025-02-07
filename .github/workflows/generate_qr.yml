@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout del repositorio
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4  # Versión actualizada
 
       - name: Instalar dependencias
         run: pip install qrcode[pil]
@@ -23,7 +23,8 @@ jobs:
           img.save('qr_code.png')"
 
       - name: Subir QR como artefacto
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4  # Versión actualizada
         with:
           name: qr_code
           path: qr_code.png
+
