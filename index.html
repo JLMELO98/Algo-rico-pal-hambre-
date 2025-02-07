@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pedido de Productos</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #181A1B;
+            color: #fff;
+            position: relative;
+            width: 360px;
+            height: 800px;
+        }
+        .container {
+            margin: 0 auto;
+            background: #181A1B;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            width: 360px;
+            height: 760px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+        .header {
+    text-align: center;
+    color: #fff;
+    width: 365px;
+        }
+        .product-list {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+        }
+        .product {
+            display: inline-block;
+            width: 25%;
+            margin: 10px 1%;
+            text-align: center;
+            border: 1px solid #ddd;
+            padding: 10px;
+            border-radius: 8px;
+            background-color: #181A1B;
+            position: relative;
+            height: 217px;
+        }
+        .product-img {
+            width: 94px;
+            height: 110px;
+            object-fit: cover;
+            border-radius: 5px;
+            margin-bottom: 10px;
+            margin-top: -4px;
+        }
+        .product-name {
+            margin-top: -10px;
+        }
+        .price {
+            color: #000;
+            font-size: 18px;
+            margin-top: 5px;
+            position: absolute;
+            z-index: 15;
+            top: 220px;
+            left: 164px;
+            padding-top: 0;
+            padding-bottom: 0;
+            bottom: -27px;
+        }
+        .price-class {
+            font-weight: bold;
+            top: 171px;
+            left: 40px;
+        }
+        .etiqueta {
+            position: absolute;
+            top: 173px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 1;
+            max-width: 84px;
+            max-height: 25px;
+            display: inline;
+        }
+        .input-group {
+            margin-top: 33px;
+        }
+        .input-group label {
+            font-weight: bold;
+        }
+        .input-group input, .input-group select {
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        .button-container {
+            margin-top: 20px;
+        }
+        .submit-button {
+            background-color: #28a745;
+            color: #fff;
+            font-size: 16px;
+            cursor: pointer;
+            width: 100%;
+            padding: 10px;
+            border-radius: 5px;
+        }
+        .submit-button:hover {
+            background-color: #218838;
+        }
+        .total-container {
+            margin-top: 20px;
+            font-size: 18px;
+        }
+        .info {
+            margin-top: 30px;
+            top: 24px;
+        }
+        .info p {
+            margin: 5px 0;
+        }
+        .admin-panel {
+            display: none;
+            margin-top: 30px;
+        }
+        .admin-button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 10px;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+        .admin-button:hover {
+            background-color: #fff;
+        }
+        .designed-by {
+    width: 53px;
+    height: auto;
+    margin-top: 34px;
+    align-self: center;
+    margin-bottom: 20px;
+    opacity: 0.18;
+        }
+
+        .quantity-controls {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 2px;
+            width: 114px;
+            margin-left: -12px;
+        }
+
+        .quantity-btn {
+            width: 120px;
+            height: 35px;
+            background-color: #333;
+            color: white;
+            font-size: 18px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            display: inline-block;
+            text-align: center;
+            top: 0px;
+        }
+
+        .product-quantity {
+            width: 16px;
+            height: 14px;
+            text-align: center;
+            background-color: #333;
+            color: white;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+            opacity: 0.72;
+            top: 6px;
+            position: relative;
+            -webkit-box-shadow: 0px 0px;
+            box-shadow: 0px 0px;
+        }
+
+        .warning-message {
+            color: red;
+            font-size: 14px;
+            display: none;
+        }
+    .nombre {
+    width: 46px;
+    height: 12px;
+    min-height: 9px;
+    min-width: 0px;
+    max-width: 336px;
+    position: absolute;
+    top: 435px;
+}
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1 class="header">Pedido de Productos😋</h1>
+        <form id="orderForm">
+            <div class="product-list">
+              <div class="product">
+                    <img src="img/galelta-selz.webp" alt="Galleta Selz" class="product-img">
+                    <label class="product-name" for="quantity1">Galleta Selz original<br><br></label>
+                    <span class="price price-class" id="price1">$400</span>
+                    <img src="img/Etiqueta.png" alt="Etiqueta" class="etiqueta">
+                    <label for="quantity1"><br>Cantidad:</label>
+                    <div class="quantity-controls">
+                        <button type="button" class="quantity-btn" onclick="updateQuantity('quantity1', -1)">-</button>
+                        <input type="text" id="quantity1" name="quantity1" value="0" class="product-quantity" readonly>
+                        <button type="button" class="quantity-btn" onclick="updateQuantity('quantity1', 1)">+</button>
+                    </div>
+                </div>
+
+                <div class="product">
+                    <img src="img/galleta-selz-queso.webp" alt="Galleta Selz Queso" class="product-img">
+                    <label class="product-name" for="quantity2">Galleta Selz Queso<br></label>
+                    <span class="price price-class" id="price2">$400</span>
+                    <img src="img/Etiqueta.png" alt="Etiqueta" class="etiqueta">
+                    <label for="quantity2"><br><br>Cantidad:</label>
+                    <div class="quantity-controls">
+                        <button type="button" class="quantity-btn" onclick="updateQuantity('quantity2', -1)">-</button>
+                        <input type="text" id="quantity2" name="quantity2" value="0" class="product-quantity" readonly>
+                        <button type="button" class="quantity-btn" onclick="updateQuantity('quantity2', 1)">+</button>
+                    </div>
+                </div>
+
+                <div class="product">
+                    <img src="img/alfajor-panchote.jpeg" alt="Alfajor Panchote" class="product-img">
+                    <label class="product-name" for="quantity3">Alfajor Panchote<br><br></label>
+                    <span class="price price-class" id="price3">$400</span>
+                    <img src="img/Etiqueta.png" alt="Etiqueta" class="etiqueta">
+                    <label for="quantity3"><br>Cantidad:</label>
+                    <div class="quantity-controls">
+                        <button type="button" class="quantity-btn" onclick="updateQuantity('quantity3', -1)">-</button>
+                        <input type="text" id="quantity3" name="quantity3" value="0" class="product-quantity" readonly>
+                        <button type="button" class="quantity-btn" onclick="updateQuantity('quantity3', 1)">+</button>
+                    </div>
+                </div>
+          </div>
+
+          <div class="input-group">
+                <label for="name">Tu nombre:</label>
+                <p>&nbsp;</p>
+<input name="name" type="text" id="name" required class="Nombre nombre" placeholder="Ingresa tu nombre">
+          </div>
+
+            <div class="warning-message" id="warningMessage">Por favor ingresa tu nombre.</div>
+
+            <div class="total-container" id="totalContainer">
+                Total a pagar: $0
+            </div>
+
+            <div class="button-container">
+                <button type="button" class="submit-button" onclick="sendOrder()">Enviar Pedido</button>
+            </div>
+      </form>
+
+        <div class="info">
+            <h3>Datos del Vendedor:</h3>
+            <p><strong>Nombre:</strong> Andrea Reyes P.</p>
+            <p><strong>RUT:</strong> 16.993.035-K</p>
+            <p><strong>Banco:</strong> Cuenta Rut Banco Estado</p>
+        </div>
+
+        <div class="admin-panel" id="adminPanel">
+            <h2>Panel Administrador</h2>
+            <label for="adminPassword">Contraseña de Administrador:</label>
+            <input type="password" id="adminPassword" placeholder="Contraseña">
+            <button class="admin-button" onclick="verifyAdmin()">Acceder</button>
+        </div>
+
+        <img src="img/Designed-by.png" alt="Designed by" class="designed-by">
+</div>
+    
+    <script>
+        function updateQuantity(id, change) {
+            var quantityInput = document.getElementById(id);
+            var currentQuantity = parseInt(quantityInput.value);
+            if (currentQuantity + change >= 0) {
+                quantityInput.value = currentQuantity + change;
+            }
+            updateTotal();
+        }
+
+        function updateTotal() {
+            var total = 0;
+            var prices = [400, 400, 400];
+            for (var i = 1; i <= 3; i++) {
+                var quantity = parseInt(document.getElementById('quantity' + i).value);
+                total += quantity * prices[i - 1];
+            }
+            document.getElementById('totalContainer').textContent = 'Total a pagar: $' + total;
+        }
+
+        function sendOrder() {
+            var name = document.getElementById('name').value;
+            if (!name) {
+                document.getElementById('warningMessage').style.display = 'block';
+                return;
+            }
+            document.getElementById('warningMessage').style.display = 'none';
+
+            var products = [
+                { id: 'quantity1', name: 'Galleta Selz original', price: 400 },
+                { id: 'quantity2', name: 'Galleta Selz Queso', price: 400 },
+                { id: 'quantity3', name: 'Alfajor Panchote', price: 400 }
+            ];
+
+            var orderText = `¡Hola! Mi pedido es el siguiente:\n\n`;
+            orderText += `Nombre: ${name}\n\n`;
+            var hasProduct = false;
+            var total = 0;
+
+            products.forEach(product => {
+                var quantity = parseInt(document.getElementById(product.id).value);
+                if (quantity > 0) {
+                    orderText += `${product.name}: ${quantity} unidades - $${quantity * product.price}\n`;
+                    total += quantity * product.price;
+                    hasProduct = true;
+                }
+            });
+
+            if (!hasProduct) {
+                alert('Debes seleccionar al menos un producto para enviar el pedido.');
+                return;
+            }
+
+            orderText += `\nTotal a pagar: $${total}`;
+    orderText += `\n\n¡Muchas Gracias! \uD83D\uDE0B`; // Usando el código Unicode por pares para el emoji 😋
+
+            // Codificar el mensaje para la URL
+            var encodedText = encodeURIComponent(orderText);
+            
+            // Crear el enlace de WhatsApp
+            var whatsappUrl = `https://wa.me/56940076052?text=${encodedText}`;
+            
+            // Abrir WhatsApp en una nueva pestaña
+            window.open(whatsappUrl, '_blank');
+        }
+    </script>
+</body>
+</html>
