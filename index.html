@@ -239,9 +239,9 @@
                 </div>
 
                 <div class="product">
-                    <img src="img/alfajor-panchote.jpeg" alt="Alfajor Panchote" class="product-img">
-                    <label class="product-name" for="quantity3">Alfajor Panchote<br><br></label>
-                    <span class="price price-class" id="price3">$400</span>
+                    <img src="img/alfajor-panchito.jpg" alt="Alfajor Panchito" class="product-img">
+                    <label class="product-name" for="quantity3">Alfajor Panchito<br><br></label>
+                    <span class="price price-class" id="price3">$300</span>
                     <img src="img/Etiqueta.png" alt="Etiqueta" class="etiqueta">
                     <label for="quantity3"><br>Cantidad:</label>
                     <div class="quantity-controls">
@@ -298,7 +298,7 @@
 
         function updateTotal() {
             var total = 0;
-            var prices = [400, 400, 400];
+            var prices = [400, 400, 300];
             for (var i = 1; i <= 3; i++) {
                 var quantity = parseInt(document.getElementById('quantity' + i).value);
                 total += quantity * prices[i - 1];
